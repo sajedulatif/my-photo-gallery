@@ -27,32 +27,37 @@
 
   <script>
     
-  document.getElementById("upload_widget").addEventListener("click", function () {
-      const cloudName = "Sajedulislam";
-      const uploadPreset = "my_preset"; // Ekhane preset-er naam thikmoto din
+  const cloudName = "Sajedulislam";
+    const uploadPreset = "my_preset"; // Apnar preset name boshan
 
-      cloudinary.openUploadWidget({
-        cloudName: cloudName,
-        uploadPreset: uploadPreset,
-        tags: ['mygallery'],
-        
-        // --- MULTIPLE SELECTION SETTINGS ---
-        multiple: true,           // Ekshathe onekgulo select kora jabe
-        maxFiles: 50,             // Ekbare sorbocho koyti chhobi upload korte parben (icchemoto barate paren)
-        showCompletedButton: true, // Upload sesh hole 'Done' button dekhabe
-        clientAllowedFormats: ["images"], // Shudhu images allow korbe
-        
-      }, (error, result) => {
-        if (error) {
-          // Ekhane error-ti screen-e dekhabe
-          console.error("Cloudinary Error:", error);
-          alert("Error: " + JSON.stringify(error));
-        }
-        if (!error && result && result.event === "success") {
-          alert("Uploaded! Refresh the gallery.");
-        }
-      });
-      
+    var myWidget = cloudinary.createUploadWidget({
+      cloudName: cloudName,
+      uploadPreset: uploadPreset,
+      sources: ['local', 'camera', 'url'], // Phone gallery and camera
+      tags: ['mygallery'],
+
+      // --- MULTIPLE SELECTION SETTINGS ---
+      multiple: true,           // Onekgulo select kora jabe
+      maxFiles: 100,            // Ekbare ১০০ti chobi select kora jabe
+      // clientAllowedFormats: ["images"],
+      showCompletedButton: true,
+
+    }, (error, result) => {
+      if (!error && result && result.event === "success") {
+        console.log('Done! Image info: ', result.info);
+      }
+
+      // --- AUTO REFRESH LOGIC ---
+      // Jokhon sob chobi upload sesh hobe (Queue end), tokhon page refresh hobe
+      if (result && result.event === "queue-end") {
+        alert("Shorbochho upload shomponno hoyeche! Gallery refresh hocche...");
+        // Gallery page-e niye jabe auto
+        window.location.href = "index.html";
+      }
+    });
+
+    document.getElementById("upload_widget").addEventListener("click", function () {
+      myWidget.open();
     }, false);
   </script>
 </body>
