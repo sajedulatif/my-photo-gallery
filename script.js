@@ -21,4 +21,14 @@ async function fetchPhotos() {
   });
 }
 
-fetchPhotos();
+// fetchPhotos();
+const password = prompt("Enter Password to view Gallery:");
+
+if (password === "sajed@56") {
+  // Ekhane apnar password din
+  fetchPhotos(); // Password thik holei chhobi load hobe
+} else {
+  alert("Wrong Password!");
+  document.body.innerHTML =
+    "<h1 style='color:white; font-size: 2rem; text-align:center;'>Access Denied</h1>";
+}

@@ -23,7 +23,10 @@
     <a href="index.html" class="block mt-6 text-blue-500 underline">Back to Gallery</a>
   </div>
 
+
+
   <script>
+    
   document.getElementById("upload_widget").addEventListener("click", function () {
       const cloudName = "Sajedulislam";
       const uploadPreset = "my_preset"; // Ekhane preset-er naam thikmoto din
@@ -31,7 +34,14 @@
       cloudinary.openUploadWidget({
         cloudName: cloudName,
         uploadPreset: uploadPreset,
-        tags: ['mygallery']
+        tags: ['mygallery'],
+        
+        // --- MULTIPLE SELECTION SETTINGS ---
+        multiple: true,           // Ekshathe onekgulo select kora jabe
+        maxFiles: 50,             // Ekbare sorbocho koyti chhobi upload korte parben (icchemoto barate paren)
+        showCompletedButton: true, // Upload sesh hole 'Done' button dekhabe
+        clientAllowedFormats: ["images"], // Shudhu images allow korbe
+        
       }, (error, result) => {
         if (error) {
           // Ekhane error-ti screen-e dekhabe
@@ -42,6 +52,7 @@
           alert("Uploaded! Refresh the gallery.");
         }
       });
+      
     }, false);
   </script>
 </body>
